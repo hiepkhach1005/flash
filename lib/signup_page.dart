@@ -27,7 +27,7 @@ class _SignUpPageState extends State<SignUpPage> {
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
 
   Future<User>userSignUp(String email, String password, String fullname,String roleID, String phone, String address, String DOB, String gender) async {
-    const url = "http://10.0.2.2:9195/account/register";
+    const url = "http://localhost:9195/account/register";
     Map<String, dynamic> requestPayload = {
       "email": email,
       "password": password,
@@ -229,19 +229,20 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                     onPressed: (){
                       setState(() {
-                        _key.currentState!.validate();
-                        userSignUp(
-                          _emailController.text,
-                          _passwordController.text,
-                          _fullnameController.text,
-                          _roleIDController.text,
-                          _phoneController.text,
-                          _addressController.text,
-                          _DOBController.text,
-                          _genderController.text,
-                        );
-                      }
-                      );
+                        if(_key.currentState!.validate()){
+                          userSignUp(
+                            _emailController.text,
+                            _passwordController.text,
+                            _fullnameController.text,
+                            _roleIDController.text,
+                            _phoneController.text,
+                            _addressController.text,
+                            _DOBController.text,
+                            _genderController.text,
+                          );
+                        }
+                        Navigator.pop(context);
+                      });
                     },
                   ),
                 ),
